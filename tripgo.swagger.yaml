@@ -1845,10 +1845,27 @@ definitions:
               # multipleOf: 1
             pricingTable:
               $ref: '#/definitions/PricingTable'
+      inService:
+        description: Whether this pod is currently in service (e.g., some might be closed for maintenance)
+        type: boolean
+      totalSpaces:
+        description: Static information of total spaces
+        type: integer
+      availableVehicles:
+        description: |
+          Real-time information of available vehicles
+        type: integer
+      availableChargingSpaces:
+        description: |
+          Real-time information of available charging spaces (for electric vehicles)
+        type: integer
+      lastUpdated:
+        description: Timestamp `availableVehicles` got recorded in seconds since 1970
+        type: integer
+
     required:
       - identifier
       - operator
-      - vehicles
 
   CarPodLocation:
     allOf:
