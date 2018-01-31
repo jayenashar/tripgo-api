@@ -130,6 +130,7 @@
             <li><a href="#single-modal-vs-multi-modal-routing" class="">Single-modal vs. multi-modal routing</a></li>
             <li><a href="#trips-groups-frequencies-and-templates" class="">Trips, groups, frequencies and templates</a></li>
             <li><a href="#placeholders-in-segment-templates" class="">Placeholders in segment templates</a></li>
+            <li><a href="#advanced-routing-features" class="">Advanced Routing Features</a></li>
         <li class="main "><a href="#locations" class="">Locations</a></li>
             <li><a href="#locations-cell-ids-and-hash-codes" class="">Locations, cell IDs and hash codes</a></li>
     </ul>
@@ -255,6 +256,32 @@
 <li><code>&lt;TRAFFIC&gt;</code>: (Badly named) placeholder for the total duration <em>without</em> traffic of the segment, e.g., <code>segment.durationWithoutTraffic</code> formatted as a duration string.</li>
 </ul>
 <p><code>*</code>: Should be updated with real-time data.</p>
+<h2 id="advanced-routing-features">Advanced Routing Features</h2>
+<blockquote>
+<p>how does <code>wheelchair</code> flag in true affect the resulting trips</p>
+</blockquote>
+<p>There are three possible scenarios for public services, public stops, and paths: we know they are wheelchair accessible,
+we know they are not wheelchair accessible, or we don't have information about them.
+When wheelchair flag is on, our routing engine will try to avoid services, stops and paths that are known by us to be inaccessible.
+In addition, we'll change 'walking' instructions to 'rolling' instructions, and indicate which sections are accessible/inaccessible/unknown.</p>
+<blockquote>
+<p>What's the <code>action</code> field in the alerts for?</p>
+</blockquote>
+<p>Sometimes we get realtime data that may change the accessibility status for public stops, 
+for example when a lift is temporarily out of service in a train station. In these cases, 
+we provide a mechanism that allows to identify the problem and send a re-route request 
+specifically asking to avoid the stop(s) that have become inaccessible.</p>
+<p>If the embark/disembark stop of a public segment has issues, then we'll associate that 
+segment with an alert describing the issue and containing a special <code>action</code> field of 
+type <code>rerouteExcludingStops</code> which provides a list of the affected stop codes. Then if 
+you want to get a new set of results avoiding those stops, you can add the <code>avoidStops</code> 
+parameter to your original routing request, using the stop codes provided in the alert 
+action field, and re-send it.</p>
+<p>NOTE that this new request will only avoid the stops you specifically indicated with the 
+<code>avoidStops</code> parameter, so your new set of results may again include an alert for a different
+stop that also has issues. So you may want to send a third request asking to avoid this
+one too, but it's important that you include all of them in the <code>avoidStops</code> list, or 
+otherwise you'll get again the stops that were first excluded.</p>
 <hr />
 <h1 id="locations">Locations</h1>
 <h2 id="locations-cell-ids-and-hash-codes">Locations, cell IDs and hash codes</h2>
