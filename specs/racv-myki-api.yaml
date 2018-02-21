@@ -1,0 +1,253 @@
+swagger: '2.0'
+info:
+  version: '0.1'
+  title: Pay24 myki API for RACV
+  contact: {}
+schemes:
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json
+security:
+  - Pay24ApiKey: []
+paths:
+  /provider/myki/inspect:
+    get:
+      summary: Inspects a myki account and returns all active card numbers and balances
+      parameters: []
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/MykiInspectResponse'
+        default:
+          description: Error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      security:
+        - Pay24ApiKey: []
+        - Pay24UserAuth: []
+        - Pay24PasswordAuth: []
+  '/provider/myki/card/{cardNumber}':
+    get:
+      summary: Returns details associated with a single myki card number
+      parameters: []
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/MykiCardResponse'
+        default:
+          description: Error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      security:
+        - Pay24ApiKey: []
+        - Pay24UserAuth: []
+        - Pay24PasswordAuth: []
+    parameters:
+      - name: cardNumber
+        in: path
+        required: true
+        type: string
+        description: the myki card number to be queried
+        minLength: 15
+        maxLength: 15
+  '/provider/myki/card/{cardNumber}/money':
+    post:
+      summary: Adds myki money to a given card
+      parameters:
+        - name: amount
+          in: query
+          required: true
+          type: integer
+          description: Amount in dollars to be added to myki money
+          minimum: 10
+          maximum: 250
+        - name: contactEmail
+          in: query
+          required: false
+          type: string
+          description: >-
+            E-mail address for transaction reminders. Takes precedence over
+            contactMobile.
+        - name: contactMobile
+          in: query
+          required: false
+          type: string
+          description: mobile number for transaction reminders
+          minLength: 9
+          maxLength: 9
+      responses:
+        '200':
+          description: Status 200
+          schema:
+            $ref: '#/definitions/MykiTopupResonse'
+        default:
+          description: Error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      security:
+        - Pay24ApiKey: []
+        - Pay24UserAuth: []
+        - Pay24PasswordAuth: []
+    parameters:
+      - name: cardNumber
+        in: path
+        required: true
+        type: string
+        description: the myki card number to be queried
+        minLength: 15
+        maxLength: 15
+  '/provider/myki/card/{cardNumber}/pass':
+    post:
+      summary: Adds myki pass to a given card
+      parameters:
+        - name: zoneFrom
+          in: query
+          required: true
+          type: integer
+          description: Start of myki zone to be covered by the myki pass
+          minimum: 1
+          maximum: 81
+        - name: zoneTo
+          in: query
+          required: true
+          type: integer
+          description: End of myki zone to be covered by the myki pass
+          minimum: 1
+          maximum: 81
+        - name: amountInDays
+          in: query
+          required: true
+          type: integer
+          description: >-
+            Duration in days of myki pass to be added to the card. Must be
+            either 7 or 28-365 days.
+          minimum: 7
+          maximum: 365
+      responses:
+        '200':
+          description: Status 200
+          schema:
+            $ref: '#/definitions/MykiTopupResonse'
+        default:
+          description: Error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      security:
+        - Pay24ApiKey: []
+        - Pay24UserAuth: []
+        - Pay24PasswordAuth: []
+    parameters:
+      - name: cardNumber
+        in: path
+        required: true
+        type: string
+        description: the myki card number to be queried
+        minLength: 15
+        maxLength: 15
+securityDefinitions:
+  Pay24ApiKey:
+    type: apiKey
+    name: X-Pay24-API-Key
+    in: header
+  Pay24UserAuth:
+    type: apiKey
+    name: X-Pay24-Username
+    in: header
+  Pay24PasswordAuth:
+    type: apiKey
+    name: X-Pay24-Password
+    in: header
+definitions:
+  ErrorResponse:
+    type: object
+    required:
+      - code
+      - message
+    properties:
+      code:
+        type: integer
+        description: Pay24 error code
+      message:
+        type: string
+        description: Human-readable error text
+  MykiInspectResponse:
+    type: array
+    items:
+      required:
+        - cardHolder
+        - cardNumber
+        - mykiMoney
+      type: object
+      properties:
+        cardNumber:
+          type: string
+          description: myki card number
+          minLength: 15
+          maxLength: 15
+        cardHolder:
+          type: string
+          description: name of card holder
+        mykiMoney:
+          type: integer
+          description: myki money balance in cents
+        mykiPass:
+          type: string
+          format: date-time
+          description: expiry date and time of current myki pass
+  MykiCardResponse:
+    type: object
+    required:
+      - cardExpiry
+      - cardHolder
+      - cardStatus
+      - cardType
+      - lastTransactionDate
+      - mykiMoney
+      - updatedAt
+    properties:
+      cardHolder:
+        type: string
+        description: Name of the myki card holder
+      cardType:
+        type: string
+        description: 'Type of card, e.g. Full Fare'
+      cardExpiry:
+        type: string
+        format: date
+        description: Expiry date of the card (not to be confused with myki pass)
+      cardStatus:
+        type: string
+        description: Card status. Currently always "Active"
+      mykiMoney:
+        type: integer
+        description: myki money balance in cents
+      mykiMoneyPending:
+        type: integer
+        description: myki money amount to be added to card at next touch on
+      mykiPass:
+        type: string
+        format: date-time
+        description: Expiry date and time of current myki pass
+      mykiPassPending:
+        type: integer
+        description: Duration in days of myki pass to be added to card at next touch on
+      lastTransactionDate:
+        type: string
+        format: date-time
+        description: Date and time of last transaction on this myki card
+      updatedAt:
+        type: string
+        format: date-time
+        description: Date and time results fetched from myki
+  MykiTopupResonse:
+    type: object
+    required:
+      - transactionReference
+    properties:
+      transactionReference:
+        type: string
+        description: myki transaction reference number
