@@ -55,7 +55,7 @@
 </div>
 	</div>
 	<div class="container-fluid">
-		<a class="logo" href=".">
+		<a class="logo" href="">
 			<img src="./img/tripgo-api-logo-white.svg" alt="TripGo API Logo White" height="32" width="140">
 		</a>
 
@@ -73,7 +73,7 @@
 					
 						
 							<li class="current">
-								<a href=".">Getting Started</a>
+								<a href="">Getting Started</a>
 							</li>
 						
 					
@@ -130,7 +130,7 @@
 
 <h1 id="tripgo-api">TripGo API</h1>
 <p>The TripGo API allows you to plan <strong>door-to-door trips</strong> using a large variety of <strong>public and private transport.</strong> It integrates <strong>real-time</strong> information and, for selected providers, allows users to <strong>book and pay</strong> for transport.
-<img alt="All-transports" src="./img/tripgo-api-all-trasport@2x-100.jpg" /></p>
+<img alt="All-transports" src="img/tripgo-api-all-trasport@2x-100.jpg" /></p>
 <hr />
 <h2 id="getting-started">Getting started</h2>
 <h3 id="1-getting-an-api-key">1. Getting an API key</h3>
@@ -145,7 +145,7 @@
 <pre><code>curl 'https://api.tripgo.com/v1/routing.json?from=(-33.859,151.207)&amp;to=(-33.891,151.209)&amp;modes[]=pt_pub&amp;v=11&amp;locale=en' -H 'Accept: application/json' --compressed -H &quot;X-TripGo-Key: $tripgoKey&quot; -g
 </code></pre>
 
-<p>Keep in mind that this API is optimised to return a large number of trip results while maintaining small response sizes. This has a number of complications. Notably, to get a trip's segments you need to combine the segment references with the segment templates. This is explained further <a href="./faq/#trips-groups-frequencies-and-templates">in the F.A.Q.</a>.</p>
+<p>Keep in mind that this API is optimised to return a large number of trip results while maintaining small response sizes. This has a number of complications. Notably, to get a trip's segments you need to combine the segment references with the segment templates. This is explained further <a href="faq/#trips-groups-frequencies-and-templates">in the F.A.Q.</a>.</p>
 <h3 id="3-where-to-go-from-here">3. Where to go from here?</h3>
 <ol>
 <li>
@@ -218,8 +218,7 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
 		<script src="./js/app.min.js"></script>
-        <script src="./search/require.js"></script>
-        <script src="./search/search.js"></script>
+        <script src="search/main.js"></script>
 		<script>hljs.initHighlightingOnLoad();</script>
 </body>
 </html>

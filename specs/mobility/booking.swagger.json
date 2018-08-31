@@ -132,6 +132,24 @@
             "responseSchema": {
               "$ref": "#/definitions/ErrorMessage"
             }
+          },
+          "456": {
+            "description": "Invalid parameter format",
+            "schema": {
+              "$ref": "#/definitions/ErrorMessage"
+            },
+            "responseSchema": {
+              "$ref": "#/definitions/ErrorMessage"
+            }
+          },
+          "448": {
+            "description": "Booking update not allowed",
+            "schema": {
+              "$ref": "#/definitions/ErrorMessage"
+            },
+            "responseSchema": {
+              "$ref": "#/definitions/ErrorMessage"
+            }
           }
         },
         "security": [
@@ -167,8 +185,26 @@
           }
         ],
         "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "string"
+            },
+            "responseSchema": {
+              "type": "string"
+            }
+          },
           "401": {
             "description": "userToken missing or invalid",
+            "schema": {
+              "$ref": "#/definitions/ErrorMessage"
+            },
+            "responseSchema": {
+              "$ref": "#/definitions/ErrorMessage"
+            }
+          },
+          "448": {
+            "description": "Booking delete not allowed",
             "schema": {
               "$ref": "#/definitions/ErrorMessage"
             },
@@ -237,35 +273,36 @@
             "userToken": []
           }
         ]
-      },
-      "post": {
+      }
+    },
+    "/summary": {
+      "get": {
         "tags": [
           "Bookings"
         ],
-        "summary": "Save an external booking",
-        "description": "",
-        "operationId": "storeBooking",
+        "summary": "Get bookings summary",
+        "description": "Get all bookings count grouped by month",
+        "operationId": "getBookingsSummary",
         "produces": [
           "application/json"
         ],
         "parameters": [
           {
-            "in": "body",
-            "name": "body",
-            "required": false,
-            "schema": {
-              "$ref": "#/definitions/ExternalBookingData"
-            }
+            "name": "userToken",
+            "in": "header",
+            "description": "user token",
+            "required": true,
+            "type": "string"
           }
         ],
         "responses": {
           "200": {
             "description": "successful operation",
             "schema": {
-              "type": "string"
+              "$ref": "#/definitions/BookingsSummaryResponse"
             },
             "responseSchema": {
-              "type": "string"
+              "$ref": "#/definitions/BookingsSummaryResponse"
             }
           },
           "401": {
@@ -556,6 +593,19 @@
         "currency": {
           "type": "string"
         },
+        "date": {
+          "type": "string",
+          "description": "Date formatted using ISO 8601 (e.g., `2017-05-30T12:00:00+10:00`)"
+        },
+        "receiptURL": {
+          "type": "string",
+          "description": "url of receipt image (if available)"
+        },
+        "budgetPoints": {
+          "type": "number",
+          "format": "double",
+          "description": "budget points used"
+        },
         "productName": {
           "type": "string"
         },
@@ -622,6 +672,31 @@
     },
     "MultipartBody": {
       "type": "object"
+    },
+    "BookingsSummaryResponse": {
+      "type": "object",
+      "properties": {
+        "summary": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/MonthlySummary"
+          }
+        }
+      }
+    },
+    "MonthlySummary": {
+      "type": "object",
+      "properties": {
+        "month": {
+          "type": "string",
+          "example": "2018-08",
+          "description": "Month"
+        },
+        "count": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
     }
   }
 }
