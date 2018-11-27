@@ -131,6 +131,7 @@
         <li class="main "><a href="#general" class="active">General</a></li>
             <li><a href="#languages" class="">Languages</a></li>
             <li><a href="#regions" class="">Regions</a></li>
+            <li><a href="#map-data" class="">Map Data</a></li>
         <li class="main "><a href="#routing" class="">Routing</a></li>
             <li><a href="#mode-identifiers" class="">Mode Identifiers</a></li>
             <li><a href="#single-modal-vs-multi-modal-routing" class="">Single-modal vs. multi-modal routing</a></li>
@@ -167,6 +168,19 @@
 </blockquote>
 <p>Most developer should not need to worry about these and can just use the <code>api.tripgo.com</code> domain. However, performance critical application can use this to reduce lag and directly hit the routing servers.</p>
 <p><em>For advanced users</em>: This exposes to you that our API is covered by multiple servers - though not every server covers ever region. You can use the URLs to directly query servers covering a certain region – which can be beneficial to reduce lag and is recommended for server-to-server communication. However, be aware that you should add failover from one server to another yourself then, as individual servers can go down unannounced for maintenance. You should only cache this information short term as those URLs can change without notice.</p>
+<hr />
+<h2 id="map-data">Map Data</h2>
+<blockquote>
+<p>Which Map Data Layer do you use?</p>
+</blockquote>
+<p>Our platform uses OSM (<a href="https://www.openstreetmap.org">Open Street Map</a>) for the underlying map data, and this information is used when we calculate routes (mainly for private transport modes). This data affects, for example, how we decide what routes are faster, the shapes of the resulting trips for roads, paths and cycleways, among others.
+We can also integrate other data layers (such as <a href="https://www.here.com/">Here</a>) upon request. If you want to use other data layer than OSM, please get in touch with our team <a href="mailto:api@skedgo.com">by mail</a> or on <a href="http://slack.tripgo.com/">Slack</a> (by <a href="http://slackin.tripgo.com/">self-invite</a>). </p>
+<blockquote>
+<p>But I see Google Maps in TripGo apps</p>
+</blockquote>
+<p>TripGo Android app and our web app use <a href="https://developers.google.com/maps/documentation/">Google Maps</a> to display information on the map, whereas the TripGo iOS app uses <a href="https://developer.apple.com/maps/">Apple Maps</a>. 
+Note, however, that this is different from the map data used by the platform to calculate routes. Google or Apple Maps are the visual map used by front-end apps to display trips and locations to the end user.
+It is up to the front-ends to decide which mapping UI SDK to use. It is important to note that different mapping UIs may have restrictions in their licensing terms which other APIs and services can be used to display on and alongside those maps.</p>
 <hr />
 <h1 id="routing">Routing</h1>
 <h2 id="mode-identifiers">Mode Identifiers</h2>
