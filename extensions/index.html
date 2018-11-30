@@ -79,7 +79,7 @@
 					
 						
 							<li class="">
-								<a href="https://developer.tripgo.com/specs/">Reference</a>
+								<a href="/specs/">Reference</a>
 							</li>
 						
 					
@@ -131,6 +131,7 @@
         <li class="main "><a href="#extensions" class="active">Extensions</a></li>
             <li><a href="#unlocking-transport-modes" class="">Unlocking transport modes</a></li>
             <li><a href="#unlocking-real-time-data" class="">Unlocking real-time data</a></li>
+            <li><a href="#unlocking-geocoding-providers" class="">Unlocking geocoding providers</a></li>
             <li><a href="#unlocking-regions" class="">Unlocking regions</a></li>
     </ul>
 </div></div>
@@ -146,7 +147,7 @@
 </ol>
 <hr />
 <h2 id="unlocking-transport-modes">Unlocking transport modes</h2>
-<p>To get results for providers who aren't using Open Data, follow the instructions for the provider below. If you want to use a provider that hasn't yet been connected to our system, please get in touch with our team <a href="mailto:api@skedgo.com">by mail</a> or on Slack.</p>
+<p>To get results for providers who aren't using Open Data, follow the instructions for the provider below. If you want to use a provider that hasn't yet been connected to our system, please get in touch with our team <a href="mailto:api@skedgo.com">by mail</a> or on <a href="http://slack.tripgo.com/">Slack</a> (by <a href="http://slackin.tripgo.com/">self-invite</a>).</p>
 <h3 id="blablacar">BlaBlaCar 🌍</h3>
 <p><em>Integrations</em>: Routing, Real-time</p>
 <ol>
@@ -258,6 +259,37 @@ for in app booking, see https://redmine.buzzhives.com/issues/8952
 2. [Let us know]() that you comply with the terms. We'll then enable real-time data for AMT for your TripGo API key.
 -->
 
+<hr />
+<h2 id="unlocking-geocoding-providers">Unlocking geocoding providers</h2>
+<p>To get results from geocoding data for providers who aren't using Open Data when using <code>geocoding.json</code> endpoint, follow the instructions for the provider below. These providers will only apply for non auto-completion requests, except for What3Words ones, which can be used for both type of geocoding requests. If you want to use a provider that hasn't yet been connected to our system, please get in touch with our team <a href="mailto:api@skedgo.com">by mail</a> or on <a href="http://slack.tripgo.com/">Slack</a> (by <a href="http://slackin.tripgo.com/">self-invite</a>).</p>
+<h3 id="foursquare">Foursquare 🌎</h3>
+<ol>
+<li>Read the <a href="https://developer.foursquare.com/docs/terms-of-use/overview">Foursquare Terms of Use</a> and make sure you comply with them in your app.</li>
+<li>Sign up to the <a href="https://foursquare.com/developers/signup">Foursquare Developers Site</a></li>
+<li>Enter your <code>Foursquare API key</code> in your <a href="https://tripgo.3scale.net/admin/applications">application credentials</a>. </li>
+<li>Add <code>allowFoursquare=true</code> to your geocoding requests, and then geocoding results will then come augmented with Foursquare's API through the TripGo API for your API key (after at most 5 minutes).</li>
+</ol>
+<h3 id="google-places">Google Places 🌎</h3>
+<ol>
+<li>Read the <a href="https://developers.google.com/places/web-service/policies">Places API Policies</a> and make sure you comply with them in your app - in particular, that you are using a Google Map.</li>
+<li>Sign up to the <a href="https://developers.google.com/places/web-service/get-api-key">Google Places API</a></li>
+<li>Enter your <code>Google Places API key</code> in your <a href="https://tripgo.3scale.net/admin/applications">application credentials</a>. </li>
+<li>Add <code>allowGoogle=true</code> to your geocoding requests, and then geocoding results will then come augmented with Google Places's API through the TripGo API for your API key (after at most 5 minutes).</li>
+</ol>
+<h3 id="what3words">What3Words 🌎</h3>
+<ol>
+<li>Read the <a href="https://what3words.com/developers/api-licence-agreement/">API Licence Agreement</a> and make sure you comply with them in your app.</li>
+<li>Sign up to the <a href="https://what3words.com/developers/">What3Words API</a></li>
+<li>Enter your <code>What 3 Words key</code> in your <a href="https://tripgo.3scale.net/admin/applications">application credentials</a>. </li>
+<li>Add <code>allowW3W=true</code> to your geocoding requests, and then geocoding results will then come augmented with What3Words's API through the TripGo API for your API key (after at most 5 minutes).</li>
+</ol>
+<h3 id="yelp">Yelp 🌎</h3>
+<ol>
+<li>Read the <a href="https://www.yelp.com/developers/api_terms">Yelp Terms of Use</a> and make sure you comply with them in your app.</li>
+<li>Sign up to the <a href="https://www.yelp.com/developers">Yelp Developers Site</a></li>
+<li>Enter your <code>Yelp API key</code> in your <a href="https://tripgo.3scale.net/admin/applications">application credentials</a>. </li>
+<li>Add <code>allowYelp=true</code> to your geocoding requests, and then geocoding results will then come augmented with Yelp's API through the TripGo API for your API key (after at most 5 minutes).</li>
+</ol>
 <hr />
 <h2 id="unlocking-regions">Unlocking regions</h2>
 <p>To get results for regions with providers that aren't using Open Data, or which we haven't yet been connected to our system, please get in touch with our team <a href="mailto:api@skedgo.com">by mail</a> or on <a href="http://slack.tripgo.com/">Slack</a> (by <a href="http://slackin.tripgo.com/">self-invite</a>).</p></div>
