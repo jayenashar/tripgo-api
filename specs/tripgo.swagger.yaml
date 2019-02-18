@@ -534,6 +534,51 @@ paths:
           description: Successful response. Can include many trips.
           schema:
             $ref: '#/definitions/RoutingResponse'
+          examples:
+            Location missing:
+              error: From and/or to location missing.
+              errorCode: 400
+              usererror: true
+            Server doesn't have from region:
+              error:  Server doesn't have 'from' region | Server doesn't have 'to' region
+              errorCode: 401
+              usererror: true
+            Server doesn't have to region:
+              error:  Server doesn't have 'from' region | Server doesn't have 'to' region
+              errorCode: 401
+              usererror: true
+            Routing between locations not sopported:
+              error:  Routing between these locations is not yet supported.
+              errorCode: 1001
+              usererror: true
+            Origin outside area:
+              error:  Origin lies outside covered area.
+              errorCode: 1002
+              usererror: true
+            Destination outside area:
+              error: 1003
+              errorCode: Destination lies outside covered area.
+              usererror: true
+            Destination equals origin:
+              error: 1101
+              errorCode: Destination equals origin.
+              usererror: true
+            No from set:
+              error: 1102
+              errorCode: No 'from' location set. Please try again.
+              usererror: true
+            No to set:
+              error: 1103
+              errorCode: No 'to' location set. Please try again.
+              usererror: true
+            Departure in the past:
+              error: 1202
+              errorCode: Departure time is too far in the past for public transport.
+              usererror: true
+            Arrival in the past:
+              error: 1203
+              errorCode: Arrival time is too far in the past for public transport.
+              usererror: true
 
   /waypoint.json:
     post:
@@ -606,10 +651,10 @@ paths:
                 type: object
                 properties:
                   startTime:
-                    type: number
+                    type: integer
                     description: Start of the time period in seconds since 1970
                   endTime:
-                    type: number
+                    type: integer
                     description: End of the time period in seconds since 1970
                 required:
                   - startTime
@@ -1404,7 +1449,7 @@ definitions:
     type: object
     properties:
       v:
-        type: number
+        type: integer
         format: int32
         description: Version number
         minimum: 2
@@ -1474,6 +1519,8 @@ definitions:
           $ref: '#/definitions/RealTimeAlert'
       error:
         type: string
+      errorCode:
+        type: integer
       usererror:
         type: boolean
     # example:
@@ -1536,10 +1583,10 @@ definitions:
         type: string
         description: Arbitrary identifier for this input item. The output will refer back to this.
       startTime:
-        type: number
+        type: integer
         description: Start time in seconds since 1970
       endTime:
-        type: number
+        type: integer
         description: End time in seconds since 1970
     required:
       - class
@@ -1555,7 +1602,7 @@ definitions:
         location:
           $ref: '#/definitions/Coordinate'
         priority:
-          type: number
+          type: integer
           description: The priority of this event, used for handling clashes.
             To give an event a higher priority, assign it a higher value.
             Typical values are 9 for the user's current location (i.e., the
@@ -2223,7 +2270,7 @@ definitions:
             price:
               type: number
             maxDurationInMinutes:
-              type: number
+              type: integer
               description: maximun duration for this price in minutes
           required:
             - price
@@ -2254,7 +2301,7 @@ definitions:
     properties:
       maxStayInMinutes:
         description: Maximun stay time in minutes
-        type: number
+        type: integer
       noRestrictionWhenClosed:
         description: If this is `true`, the restrictions applies only during the time zone defined in `openingHours`
         type: boolean
