@@ -203,6 +203,7 @@ It is up to the front-ends to decide which mapping UI SDK to use. It is importan
 <li><code>cy_</code> is for cycling</li>
 <li><code>wa_</code> is for walking</li>
 <li><code>in_</code> is for intercity long distance transport</li>
+<li><code>stationary_</code> is for stationary segments in between transport segments</li>
 </ul>
 <h4 id="pt_"><code>pt_</code></h4>
 <ul>
@@ -235,6 +236,17 @@ It is up to the front-ends to decide which mapping UI SDK to use. It is importan
 <li><code>me_car-r</code> is for car rental (like Budget)</li>
 <li><code>me_car-p</code> is for car pooling (like BlaBlaCar)</li>
 <li><code>me_mot</code> is for your own motorbike</li>
+</ul>
+<h4 id="stationary_"><code>stationary_</code></h4>
+<ul>
+<li><code>stationary_parking-onstreet</code> is for parking a vehicle on-street</li>
+<li><code>stationary_parking-offstreet</code> is for parking a vehicle in an off-street location</li>
+<li><code>stationary_wait</code> is a buffer for waiting for the following transport, e.g., waiting for a taxi or ride share to show up, but <em>not</em> for transferring between timetable-based public transport segments which get the special identifier below.</li>
+<li><code>stationary_transfer</code> is for transferring between timetable-based public transport segments, often following a walk; note: you only get this if there are at least two public transport segments in a trip.</li>
+<li><code>stationary_vehicle-collect</code> is for picking up a shared vehicle</li>
+<li><code>stationary_vehicle-return</code> is for returning a shared vehicle</li>
+<li><code>stationary_airport-checkin</code> is for checking in at an airport</li>
+<li><code>stationary_airport-checkout</code> is for "checking out" off an airport, e.g., for picking up luggage and going through immigration</li>
 </ul>
 <hr />
 <h2 id="single-modal-vs-multi-modal-routing">Single-modal vs. multi-modal routing</h2>

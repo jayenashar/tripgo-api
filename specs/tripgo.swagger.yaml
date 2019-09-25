@@ -660,6 +660,8 @@ paths:
                 $ref: '#/definitions/ConfigInput'
               frame:
                 type: object
+                description: The frame limits what the earliest and latest trips are that should be returned.
+                  (Parts of) Events that are outside the frame are ignored.
                 properties:
                   startTime:
                     type: integer
@@ -2195,7 +2197,7 @@ definitions:
     properties:
       identifier:
         description: |
-          Typically a mode-identifier, but it can be more specific that the one from the query, e.g., `pt_pub_bus` even though the query requested `pt_pub`. Missing for stationary segments.
+          Typically a mode-identifier, but it can be more specific that the one from the query, e.g., `pt_pub_bus` even though the query requested `pt_pub`. Stationary segments have identifiers starting with `stationary_`.
         type: string
       alt:
         description: Textual alternative to icon
@@ -2218,6 +2220,7 @@ definitions:
       color:
         $ref: '#/definitions/Color'
     required:
+      - identifier
       - alt
       - localIcon
 
@@ -2467,7 +2470,10 @@ definitions:
         description: Cost of this segment in local currency (it's an average for ranges, considering quartile info)
       accuracy:
         type: string
-        description: Level of accuracy of this cost
+        description: Level of accuracy of this cost <br/>
+          `internal_estimate` means the value comes from SkedGo's fare calculator (which should be treated as a guidance only)<br/>
+          `external_estimate` means the value comes from an external API, usually the TSPs (final price might differ)<br/>
+          `confirmed` means confirmed price, typically from an external source, e.g., when an Uber booking was made
         enum:
           - internal_estimate
           - external_estimate
@@ -3427,6 +3433,11 @@ definitions:
         $ref: '#/definitions/ArrayOfSimpleDataSourceAttribution'
       localCost:
         $ref: '#/definitions/LocalCost'
+      mini:
+        type: object
+        description: |
+          **Deprecated.** This exists for backwards compatibility and is deprecated
+        deprecated: true
     required:
       - hashCode
       - availability
