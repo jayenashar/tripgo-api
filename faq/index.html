@@ -196,6 +196,7 @@ It is up to the front-ends to decide which mapping UI SDK to use. It is importan
 <p>The syntax of the mode string is like this:</p>
 <p><code>&lt;group&gt;_&lt;mode that makes sense to the user&gt;[_&lt;provider or fine-grained mode&gt;][_&lt;line number&gt;]</code></p>
 <h3 id="list-of-groups">List of groups</h3>
+<p><em>Warning</em>: This list can expand at any time when types of transport are added to SkedGo's backend, so if you hard-code how to interpret these identifiers, make sure to handle it gracefully if the API returns an identifier that you haven't yet seen.</p>
 <ul>
 <li><code>pt_</code> is for transit which runs on schedules</li>
 <li><code>ps_</code> is for taxi-like on-demand services</li>
@@ -247,6 +248,7 @@ It is up to the front-ends to decide which mapping UI SDK to use. It is importan
 <li><code>stationary_vehicle-return</code> is for returning a shared vehicle</li>
 <li><code>stationary_airport-checkin</code> is for checking in at an airport</li>
 <li><code>stationary_airport-checkout</code> is for "checking out" off an airport, e.g., for picking up luggage and going through immigration</li>
+<li><code>stationary_airport-transfer</code> is for transferring between flights at an airport</li>
 </ul>
 <hr />
 <h2 id="single-modal-vs-multi-modal-routing">Single-modal vs. multi-modal routing</h2>
